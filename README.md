@@ -1,7 +1,8 @@
 # Exercise_planner
 See some workouts that you can do and A calendar to track workout days.
 
--Login Page-
+-Login Page: User name and Password
+
 HOME PAGE
   ~Navbar (Home --- User Page --- calander page-- Logged-in 'user name'/ log-out)
   ~I will Have a Motivational quate when logged in (API: Universal Inspirational quates)
@@ -15,7 +16,7 @@ User Page
    ~Stretch: Use ExerciseDB to get workout idea if you can not think of any.
 
 Calander Page (API: Google Calendar)
-  ~take user info and add be able to add it to days you wish to workout
+  ~take user info and be able to add it to days you wish to workout
   ~ see what muscle group you are working out that day along with workouts and details about said workouts
   
   
