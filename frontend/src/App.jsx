@@ -1,32 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import MyNavbar from '../components/Navbar';
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [show, setShow] = useState(false);
+  const [user, setUser]= useState(null)
 
+//--------------Cookie set-up---------------------------//
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+
+    const curr_user=async()=>{
+      let myResponse=await axios.get('current_user')
+      let user1= myResponse.data 
+      console.log(user1)
+      setUser(user1)
+    }
+
+    useEffect(()=>{
+      curr_user()
+    },[])
+
+    return cookieValue;
+  }
+  const csrftoken = getCookie('csrftoken');
+  axios.defaults.headers.common["X-CSRFToken"]=csrftoken
+  //--------------Cookie set-up---------------------------//
+  // console.log(user)
+
+  
+  
+  function deleteUser(id){
+    axios.delete(`current_user/${id}/` )
+    .then( response => {
+      console.log(response.data)
+    }).then(
+      console.log('worked')
+    )
+  }
+ 
+  function getAllExercise(){
+    axios.get('exercise/').then(response=>{
+      let data = response.data
+      console.log(data)
+    })
+  }
+
+  useEffect(()=>{
+      getAllExercise()
+  }, [])
+  
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+   
+    <div className="App"  >
+      
+      
+      <MyNavbar user={user && user.username}/>
+
     </div>
   )
 }

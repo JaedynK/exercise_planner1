@@ -1,14 +1,16 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 
 urlpatterns = [
     path('', views.index, name='index'),
-    # path('categories/', views.categories),
-    # path('categories/<int:category_id>/', views.category),
-    # path('posts/', views.posts),
-    # path('posts/<int:post_id>/', views.post),
-    # path('categories/<int:category_id>/posts/', views.category_posts),
-    # path('categories/<int:category_id>/posts/<int:post_id>/', views.category_post),
+    path('signIn/', views.signIn),
+    path('signUp/', views.signUp),
+    path('signOut/', views.signOut),
+    path('current_user/', views.curr_user),
+    path('current_user/<int:user_id>/', views.get_user),
+    path('exercise/', views.exercise),
+    # path('exercise/<str:muscileGroup>', views.editExercise)
+    # re_path(r'.*', views.index),
 
 ]
